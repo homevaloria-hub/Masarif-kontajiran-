@@ -1,322 +1,1283 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مصاريفي والميزانية - PWA</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#221C13">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color: #F7F5F0;
-      --card-bg: #FFFFFF;
-      --primary-color: #221C13;
-      --accent-color: #D9A74A;
-      --text-color: #221C13;
-      --muted-color: #6B7280;
-      --danger-color: #DC2626;
-      --success-color: #059669;
-      --border-color: #E5E7EB;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-color); padding-bottom: 75px; }
-    header { background-color: var(--primary-color); color: #FFFFFF; padding: 16px; text-align: center; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-    header h1 { font-size: 1.3rem; font-weight: 700; }
-    .container { max-width: 600px; margin: 0 auto; padding: 16px; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .card { background-color: var(--card-bg); border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.04); border: 1px solid var(--border-color); }
-    .card h2 { font-size: 1.1rem; margin-bottom: 12px; color: var(--primary-color); border-bottom: 2px solid var(--accent-color); padding-bottom: 6px; display: inline-block; }
-    .summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 16px; }
-    .summary-box { background-color: #FAFAFA; padding: 12px; border-radius: 8px; border-right: 4px solid var(--accent-color); }
-    .summary-box.income { border-right-color: var(--success-color); }
-    .summary-box.expense { border-right-color: var(--danger-color); }
-    .summary-box label { font-size: 0.8rem; color: var(--muted-color); display: block; }
-    .summary-box .amount { font-size: 1.2rem; font-weight: 700; margin-top: 4px; }
-    .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 0.85rem; margin-bottom: 4px; color: var(--primary-color); }
-    input, select, button { width: 100%; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; outline: none; }
-    input:focus, select:focus { border-color: var(--accent-color); }
-    .btn { background-color: var(--primary-color); color: #FFFFFF; font-weight: 700; border: none; cursor: pointer; transition: opacity 0.2s; }
-    .btn:active { opacity: 0.85; }
-    .btn-outline { background-color: transparent; color: var(--primary-color); border: 1px solid var(--primary-color); }
-    .btn-danger { background-color: var(--danger-color); color: white; }
-    .item-list { list-style: none; }
-    .item-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-color); }
-    .item-row:last-child { border-bottom: none; }
-    .item-info .title { font-weight: 600; font-size: 0.95rem; }
-    .item-info .subtitle { font-size: 0.75rem; color: var(--muted-color); }
-    .item-actions { display: flex; align-items: center; gap: 6px; }
-    .item-actions .amount { font-weight: 700; margin-left: 8px; }
-    .btn-icon { width: auto; padding: 4px 8px; font-size: 0.8rem; border-radius: 6px; }
-    .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 100; padding: 20px; }
-    .modal-content { background: white; border-radius: 12px; padding: 20px; max-width: 500px; margin: 40px auto 0; }
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--primary-color); display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 50; }
-    .nav-item { color: #A3A3A3; text-decoration: none; font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-    .nav-item.active { color: var(--accent-color); font-weight: 700; }
-    .nav-item span.icon { font-size: 1.2rem; margin-bottom: 2px; }
-    canvas { display: block; margin: 16px auto; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>مصاريف كونتاجيران</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#120F0C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="كونتاجيران">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F7F5F0;
+    --surface: #FFFFFF;
+    --surface-2: #ECE7DC;
+    --ink: #1D1B17;
+    --ink-soft: #6E695C;
+    --line: #E4DDCC;
+    --teal: #14110D;
+    --teal-soft: #EFE8D4;
+    --ochre: #B08A32;
+    --ochre-soft: #F5EDD6;
+    --good: #2E7A50;
+    --good-soft: #E4F1E8;
+    --bad: #AE4A3B;
+    --bad-soft: #F7E8E5;
+    --radius: 14px;
+    --shadow: 0 1px 2px rgba(30,37,35,.06), 0 8px 20px rgba(30,37,35,.05);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0; padding:0; height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Tajawal', 'Segoe UI', sans-serif;
+    font-size:15px;
+    line-height:1.5;
+  }
+  .hidden{display:none !important;}
+  #app{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    background:var(--bg);
+  }
+  header.topbar{
+    padding:18px 18px 10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+  }
+  header.topbar h1{
+    font-size:21px;
+    font-weight:800;
+    margin:0;
+    color:var(--teal);
+  }
+  header.topbar .date-tag{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  #installBtn{
+    background:var(--teal); color:#fff; border:none; border-radius:9px;
+    padding:7px 12px; font-family:inherit; font-weight:700; font-size:12px; cursor:pointer;
+  }
+  main{
+    flex:1;
+    padding:6px 16px 110px;
+    overflow-y:auto;
+  }
+  .screen{display:none; animation: fadeIn .18s ease;}
+  .screen.active{display:block;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:12px;
+    box-shadow:var(--shadow);
+  }
+  .card h2, .section-title{
+    font-size:15.5px;
+    font-weight:700;
+    margin:0 0 10px;
+    color:var(--ink);
+  }
+  .muted{color:var(--ink-soft); font-size:13px;}
+  .back-link{
+    display:inline-flex; align-items:center; gap:4px; background:none; border:none;
+    color:var(--teal); font-family:inherit; font-weight:700; font-size:13.5px; padding:6px 2px 12px;
+    cursor:pointer;
+  }
+
+  .hero{
+    background: linear-gradient(160deg, #221C13 0%, var(--teal) 100%);
+    color:#fff;
+    border-radius:18px;
+    padding:20px 20px 18px;
+    margin-bottom:14px;
+    box-shadow: 0 10px 24px rgba(20,17,13,.3);
+  }
+  .hero .label{font-size:12.5px; opacity:.75; font-weight:500;}
+  .hero .amount{font-size:34px; font-weight:800; margin:2px 0 12px; letter-spacing:-.5px;}
+  .hero .amount span{font-size:16px; font-weight:500; opacity:.7; margin-inline-start:4px;}
+  .hero-row{display:flex; gap:10px;}
+  .hero-pill{flex:1; background:rgba(255,255,255,.1); border-radius:11px; padding:9px 12px;}
+  .hero-pill .pl-label{font-size:11.5px; opacity:.75;}
+  .hero-pill .pl-val{font-size:16px; font-weight:700; margin-top:2px;}
+  .hero-pill.in .pl-val{color:#8FE3B0;}
+  .hero-pill.out .pl-val{color:#F3A99A;}
+
+  .progress-track{width:100%; height:9px; background:var(--surface-2); border-radius:99px; overflow:hidden; margin:6px 0 4px;}
+  .progress-fill{height:100%; background:var(--ochre); border-radius:99px; transition:width .3s ease;}
+  .progress-fill.good{background:var(--good);}
+  .progress-fill.teal{background:var(--teal);}
+  .progress-fill.bad{background:var(--bad);}
+
+  .row-between{display:flex; align-items:center; justify-content:space-between;}
+  .list-item{display:flex; align-items:center; justify-content:space-between; padding:11px 2px; border-bottom:1px solid var(--line); gap:8px;}
+  .list-item:last-child{border-bottom:none;}
+  .li-main{display:flex; align-items:center; gap:11px; min-width:0;}
+  .li-icon{width:38px; height:38px; border-radius:10px; flex:none; display:flex; align-items:center; justify-content:center; font-size:17px; background:var(--teal-soft); color:var(--teal);}
+  .li-icon.ochre{background:var(--ochre-soft); color:var(--ochre);}
+  .li-icon.good{background:var(--good-soft); color:var(--good);}
+  .li-icon.bad{background:var(--bad-soft); color:var(--bad);}
+  .li-text{min-width:0;}
+  .li-title{font-weight:700; font-size:14.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .li-sub{font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .li-amount{font-weight:800; font-size:14.5px; flex:none; margin-inline-start:8px;}
+  .li-amount.pos{color:var(--good);}
+  .li-amount.neg{color:var(--bad);}
+  .li-del{background:none; border:none; color:var(--ink-soft); font-size:18px; padding:4px 6px; cursor:pointer; line-height:1;}
+  .empty-hint{text-align:center; padding:26px 10px; color:var(--ink-soft); font-size:13.5px;}
+  .badge{font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:99px; flex:none;}
+  .badge.good{background:var(--good-soft); color:var(--good);}
+  .badge.ochre{background:var(--ochre-soft); color:var(--ochre);}
+  .badge.bad{background:var(--bad-soft); color:var(--bad);}
+
+  .segmented{display:flex; background:var(--surface-2); border-radius:11px; padding:3px; margin-bottom:12px; gap:3px; overflow-x:auto;}
+  .segmented button{flex:1; border:none; background:transparent; padding:8px 4px; border-radius:9px; font-family:inherit; font-size:12.3px; font-weight:700; color:var(--ink-soft); cursor:pointer; white-space:nowrap;}
+  .segmented button.active{background:var(--surface); color:var(--teal); box-shadow:var(--shadow);}
+
+  .fab-row{display:flex; justify-content:flex-end; margin-bottom:10px;}
+  .fab{background:var(--teal); color:#fff; border:none; border-radius:11px; padding:10px 16px; font-family:inherit; font-weight:700; font-size:13.5px; display:flex; align-items:center; gap:6px; cursor:pointer; box-shadow:0 6px 14px rgba(20,17,13,.3);}
+  .form-panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:14px; margin-bottom:12px; box-shadow:var(--shadow);}
+  .form-panel.hidden{display:none;}
+  .field{margin-bottom:10px;}
+  .field label{display:block; font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-bottom:5px;}
+  .field input, .field select, .field textarea{width:100%; padding:10px 12px; border-radius:9px; border:1px solid var(--line); background:var(--bg); font-family:inherit; font-size:14px; color:var(--ink);}
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--teal); outline-offset:1px;}
+  .two-col{display:flex; gap:10px;}
+  .two-col .field{flex:1;}
+  .chip-select{display:flex; gap:7px; flex-wrap:wrap;}
+  .chip{padding:7px 13px; border-radius:99px; border:1px solid var(--line); background:var(--bg); font-size:12.5px; font-weight:700; color:var(--ink-soft); cursor:pointer;}
+  .chip.sel{background:var(--teal); border-color:var(--teal); color:#fff;}
+  .form-actions{display:flex; gap:8px; margin-top:12px;}
+  .btn{flex:1; padding:11px; border-radius:10px; border:none; font-family:inherit; font-weight:700; font-size:14px; cursor:pointer;}
+  .btn-primary{background:var(--teal); color:#fff;}
+  .btn-ghost{background:var(--surface-2); color:var(--ink);}
+  .btn-small{flex:none; padding:7px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg); font-family:inherit; font-weight:700; font-size:12.3px; color:var(--teal); cursor:pointer;}
+
+  nav.bottomnav{position:sticky; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--line); display:flex; padding:6px 4px calc(6px + env(safe-area-inset-bottom)); max-width:480px; margin:0 auto; width:100%;}
+  nav.bottomnav button{flex:1; background:none; border:none; font-family:inherit; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:7px 2px; color:var(--ink-soft); border-radius:10px;}
+  nav.bottomnav button.active{color:var(--teal);}
+  nav.bottomnav button .nav-label{font-size:10px; font-weight:700;}
+  nav.bottomnav svg{width:20px; height:20px;}
+
+  .goal-card{border:1px solid var(--line); border-radius:12px; padding:13px; margin-bottom:10px; background:var(--surface);}
+  .goal-card.done{opacity:.55;}
+  .goal-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .goal-title{font-weight:700; font-size:14.5px;}
+  .goal-deadline{font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
+  .goal-tag{font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:99px; background:var(--ochre-soft); color:var(--ochre); flex:none; white-space:nowrap;}
+  .goal-actions{display:flex; gap:6px; margin-top:9px; align-items:center;}
+  .step-btn{width:26px; height:26px; border-radius:8px; border:1px solid var(--line); background:var(--bg); font-weight:800; cursor:pointer; font-size:15px; color:var(--ink);}
+  .goal-pct{font-size:12.5px; font-weight:700; color:var(--ink-soft); margin-inline-start:auto;}
+
+  .savings-hero{text-align:center; padding:6px 0 2px;}
+  .savings-big{font-size:30px; font-weight:800; color:var(--teal);}
+  .savings-of{font-size:13px; color:var(--ink-soft); margin-top:2px;}
+
+  .more-grid{display:grid; grid-template-columns:1fr 1fr; gap:11px;}
+  .more-tile{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px 14px; box-shadow:var(--shadow); cursor:pointer; text-align:right;}
+  .more-tile .mt-icon{font-size:22px; margin-bottom:8px; display:block;}
+  .more-tile .mt-title{font-weight:700; font-size:14px;}
+  .more-tile .mt-stat{font-size:12px; color:var(--ink-soft); margin-top:3px;}
+
+  .bar-row{margin-bottom:11px;}
+  .bar-track{width:100%; height:16px; background:var(--surface-2); border-radius:8px; overflow:hidden; margin-top:4px;}
+  .bar-fill{height:100%; background:var(--teal); border-radius:8px;}
+
+  .toast{position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:9px 18px; border-radius:99px; font-size:13px; font-weight:700; opacity:0; pointer-events:none; transition:opacity .25s ease, bottom .25s ease; max-width:90%; text-align:center; z-index:50;}
+  .toast.show{opacity:1; bottom:92px;}
+
+  .quickform-overlay{position:fixed; inset:0; background:rgba(20,25,23,.45); z-index:60; display:flex; align-items:flex-end; justify-content:center;}
+  .quickform-overlay.hidden{display:none;}
+  .quickform-sheet{background:var(--surface); width:100%; max-width:480px; border-radius:18px 18px 0 0; padding:18px 18px calc(18px + env(safe-area-inset-bottom)); box-shadow:0 -8px 24px rgba(0,0,0,.15);}
+  .quickform-title{font-weight:800; font-size:15.5px; margin-bottom:12px;}
+  ::-webkit-scrollbar{width:0px;}
+</style>
 </head>
 <body>
-  <header><h1>مصاريفي والميزانية</h1></header>
-  <div class="container">
-    <section id="tab-home" class="tab-content active">
-      <div class="summary-grid">
-        <div class="summary-box income"><label>الدخل الشهرى</label><div class="amount" id="total-income">0.00 د.م.</div></div>
-        <div class="summary-box expense"><label>مجموع المصاريف</label><div class="amount" id="total-expense">0.00 د.م.</div></div>
+<div id="app">
+  <header class="topbar">
+    <h1>كونتاجيران</h1>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button id="installBtn" class="hidden" onclick="installApp()">⬇ ثبت التطبيق</button>
+      <span class="date-tag" id="topDate"></span>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- DASHBOARD -->
+    <section class="screen active" id="screen-dash">
+      <div class="hero">
+        <div class="label">الرصيد المتوقع لهاد الشهر</div>
+        <div class="amount" id="dashBalance">0<span>درهم</span></div>
+        <div class="hero-row">
+          <div class="hero-pill in"><div class="pl-label">الداخل</div><div class="pl-val" id="dashIncome">0 درهم</div></div>
+          <div class="hero-pill out"><div class="pl-label">الخارج</div><div class="pl-val" id="dashOutcome">0 درهم</div></div>
+        </div>
+      </div>
+
+      <div id="dashAlerts"></div>
+
+      <div class="card">
+        <div class="row-between"><h2>الادخار</h2><span class="muted" id="dashSavingsPct">0%</span></div>
+        <div class="progress-track"><div class="progress-fill good" id="dashSavingsBar" style="width:0%"></div></div>
+        <div class="muted" id="dashSavingsText">مازال ما حددتيش هدف الادخار</div>
+      </div>
+
+      <div class="card">
+        <div class="row-between"><h2>الديون</h2></div>
+        <div class="two-col">
+          <div><div class="muted">ليا عند الناس</div><div class="li-amount pos" id="dashDebtsOwedToMe">0 درهم</div></div>
+          <div><div class="muted">علي لخرين</div><div class="li-amount neg" id="dashDebtsIOwe">0 درهم</div></div>
+        </div>
+      </div>
+
+      <div class="card"><h2>المواعيد القادمة</h2><div id="dashApptsList"></div></div>
+      <div class="card"><h2>المصاريف الثابتة ديال الشهر</h2><div id="dashFixedList"></div></div>
+      <div class="card"><h2>الأهداف الجارية</h2><div id="dashGoalsList"></div></div>
+    </section>
+
+    <!-- MONEY HUB -->
+    <section class="screen" id="screen-money">
+      <div class="segmented">
+        <button class="active" data-mt="fixed" onclick="setMoneyTab('fixed')">ثابتة</button>
+        <button data-mt="daily" onclick="setMoneyTab('daily')">اليومية</button>
+        <button data-mt="car" onclick="setMoneyTab('car')">السيارة</button>
+      </div>
+
+      <div class="money-tab" id="mt-fixed">
+        <div class="card"><div class="row-between"><span class="section-title">مجموع المصاريف الثابتة</span><span class="li-amount neg" id="fixedTotal">0 درهم</span></div></div>
+        <div class="fab-row"><button class="fab" onclick="toggleForm('fixed')">+ زيد مصروف ثابت</button></div>
+        <div class="form-panel hidden" id="form-fixed">
+          <div class="field"><label>اسم المصروف</label><input id="f-fixed-name" placeholder="مثلا: كراء المنزل"></div>
+          <div class="two-col">
+            <div class="field"><label>المبلغ (درهم)</label><input id="f-fixed-amount" type="number" inputmode="decimal" placeholder="0"></div>
+            <div class="field"><label>اليوم ديال الأداء (فالشهر)</label><input id="f-fixed-day" type="number" min="1" max="31" placeholder="مثلا 5"></div>
+          </div>
+          <div class="field"><label>الصنف</label><div class="chip-select" id="f-fixed-cat"></div></div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveFixed()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('fixed')">إلغاء</button></div>
+        </div>
+        <div class="card"><div id="fixedList"></div></div>
+      </div>
+
+      <div class="money-tab" id="mt-daily" style="display:none;">
+        <div class="segmented" id="dailyMonthPicker"></div>
+        <div class="card">
+          <div class="row-between"><span class="section-title">ملخص الشهر</span></div>
+          <div class="two-col" style="margin-top:6px;">
+            <div><div class="muted">الداخل</div><div class="li-amount pos" id="dailyIn">0 درهم</div></div>
+            <div><div class="muted">الخارج</div><div class="li-amount neg" id="dailyOut">0 درهم</div></div>
+          </div>
+        </div>
+        <div class="fab-row"><button class="fab" onclick="toggleForm('tx')">+ زيد عملية</button></div>
+        <div class="form-panel hidden" id="form-tx">
+          <div class="chip-select" style="margin-bottom:10px;">
+            <div class="chip sel" id="tx-type-expense" onclick="setTxType('expense')">مصروف</div>
+            <div class="chip" id="tx-type-income" onclick="setTxType('income')">دخل</div>
+          </div>
+          <div class="field" id="tx-cat-wrap"><label>على أش خرجات</label><div class="chip-select" id="f-tx-cat"></div></div>
+          <div class="two-col">
+            <div class="field"><label>المبلغ (درهم)</label><input id="f-tx-amount" type="number" inputmode="decimal" placeholder="0"></div>
+            <div class="field"><label>التاريخ</label><input id="f-tx-date" type="date"></div>
+          </div>
+          <div class="field"><label>ملاحظة (اختياري)</label><input id="f-tx-note" placeholder="مثلا: سوق، طاكسي..."></div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveTx()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('tx')">إلغاء</button></div>
+        </div>
+        <div class="card"><div id="dailyList"></div></div>
+      </div>
+
+      <div class="money-tab" id="mt-car" style="display:none;">
+        <div class="card"><div class="row-between"><span class="section-title">مجموع صرف السيارة</span><span class="li-amount neg" id="carTotal">0 درهم</span></div></div>
+        <div class="fab-row"><button class="fab" onclick="toggleForm('car')">+ زيد حاجة ديال السيارة</button></div>
+        <div class="form-panel hidden" id="form-car">
+          <div class="field"><label>شنو</label><div class="chip-select" id="f-car-type"></div></div>
+          <div class="field hidden" id="f-car-custom-wrap"><label>سميها</label><input id="f-car-custom" placeholder="مثلا: البطرية"></div>
+          <div class="two-col">
+            <div class="field"><label>آخر مرة بدلتيها</label><input id="f-car-lastdate" type="date"></div>
+            <div class="field"><label>كل شحال (بالشهر)</label><input id="f-car-interval" type="number" placeholder="12"></div>
+          </div>
+          <div class="field"><label>الثمن (درهم)</label><input id="f-car-cost" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="form-actions"><button class="btn btn-primary" onclick="saveCar()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('car')">إلغاء</button></div>
+        </div>
+        <div class="card"><div id="carList"></div></div>
+      </div>
+    </section>
+
+    <!-- DEBTS -->
+    <section class="screen" id="screen-debts">
+      <div class="card">
+        <div class="two-col">
+          <div><div class="muted">ليا عند الناس</div><div class="li-amount pos" id="debtsTotalOwedToMe">0 درهم</div></div>
+          <div><div class="muted">علي لخرين</div><div class="li-amount neg" id="debtsTotalIOwe">0 درهم</div></div>
+        </div>
+      </div>
+      <div class="fab-row"><button class="fab" onclick="toggleForm('debt')">+ زيد دين</button></div>
+      <div class="form-panel hidden" id="form-debt">
+        <div class="chip-select" style="margin-bottom:10px;">
+          <div class="chip sel" id="debt-type-owed" onclick="setDebtType('owed_to_me')">ليا عند شي واحد</div>
+          <div class="chip" id="debt-type-iowe" onclick="setDebtType('i_owe')">علي لشي واحد</div>
+        </div>
+        <div class="field"><label>شكون</label><input id="f-debt-person" placeholder="سمية الشخص"></div>
+        <div class="two-col">
+          <div class="field"><label>المبلغ الكلي (درهم)</label><input id="f-debt-total" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="field"><label>تاريخ (اختياري)</label><input id="f-debt-date" type="date"></div>
+        </div>
+        <div class="field"><label>ملاحظة (اختياري)</label><input id="f-debt-note" placeholder="على أش هاد الدين"></div>
+        <div class="form-actions"><button class="btn btn-primary" onclick="saveDebt()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('debt')">إلغاء</button></div>
+      </div>
+      <div id="debtsList"></div>
+    </section>
+
+    <!-- GOALS -->
+    <section class="screen" id="screen-goals">
+      <div class="segmented">
+        <button class="active" data-gt="all" onclick="setGoalFilter('all')">الكل</button>
+        <button data-gt="daily" onclick="setGoalFilter('daily')">يومي</button>
+        <button data-gt="monthly" onclick="setGoalFilter('monthly')">شهري</button>
+        <button data-gt="yearly" onclick="setGoalFilter('yearly')">سنوي</button>
+        <button data-gt="project" onclick="setGoalFilter('project')">مشروع</button>
+      </div>
+      <div class="fab-row"><button class="fab" onclick="toggleForm('goal')">+ زيد هدف</button></div>
+      <div class="form-panel hidden" id="form-goal">
+        <div class="field"><label>الهدف</label><input id="f-goal-title" placeholder="مثلا: نوقف التدخين، نجمع 5000 درهم..."></div>
+        <div class="field">
+          <label>النوع</label>
+          <div class="chip-select">
+            <div class="chip sel" id="goal-type-daily" onclick="setGoalType('daily')">يومي</div>
+            <div class="chip" id="goal-type-monthly" onclick="setGoalType('monthly')">شهري</div>
+            <div class="chip" id="goal-type-yearly" onclick="setGoalType('yearly')">سنوي</div>
+            <div class="chip" id="goal-type-project" onclick="setGoalType('project')">مشروع</div>
+          </div>
+        </div>
+        <div class="field"><label>آخر أجل (اختياري)</label><input id="f-goal-deadline" type="date"></div>
+        <div class="form-actions"><button class="btn btn-primary" onclick="saveGoal()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('goal')">إلغاء</button></div>
+      </div>
+      <div id="goalsList"></div>
+    </section>
+
+    <!-- MORE HUB -->
+    <section class="screen" id="screen-more">
+      <div class="more-grid">
+        <div class="more-tile" onclick="goTo('shop')"><span class="mt-icon">🛒</span><div class="mt-title">التسوق</div><div class="mt-stat" id="moreShopStat">—</div></div>
+        <div class="more-tile" onclick="goTo('savings')"><span class="mt-icon">🐷</span><div class="mt-title">الادخار</div><div class="mt-stat" id="moreSavStat">—</div></div>
+        <div class="more-tile" onclick="goTo('appts')"><span class="mt-icon">📅</span><div class="mt-title">المواعيد</div><div class="mt-stat" id="moreApptStat">—</div></div>
+        <div class="more-tile" onclick="goTo('occasions')"><span class="mt-icon">🎉</span><div class="mt-title">المناسبات</div><div class="mt-stat" id="moreOccStat">—</div></div>
+        <div class="more-tile" onclick="goTo('report')"><span class="mt-icon">📊</span><div class="mt-title">التقرير الشهري</div><div class="mt-stat" id="moreReportStat">فاين مشاو الفلوس</div></div>
+      </div>
+    </section>
+
+    <!-- SHOPPING -->
+    <section class="screen" id="screen-shop">
+      <button class="back-link" onclick="goTo('more')">‹ رجوع للمزيد</button>
+      <div class="card"><div class="row-between"><span class="section-title">الثمن التقريبي ديال اللي مازال باقي</span><span class="li-amount neg" id="shopTotal">0 درهم</span></div></div>
+      <div class="fab-row"><button class="fab" onclick="toggleForm('shop')">+ زيد حاجة</button></div>
+      <div class="form-panel hidden" id="form-shop">
+        <div class="field"><label>شنو باغي تشري</label><input id="f-shop-name" placeholder="مثلا: طونجين، بطانية..."></div>
+        <div class="two-col">
+          <div class="field"><label>الثمن التقريبي</label><input id="f-shop-price" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="field"><label>الأولوية</label>
+            <div class="chip-select">
+              <div class="chip sel" id="shop-pr-normal" onclick="setShopPriority('normal')">عادي</div>
+              <div class="chip" id="shop-pr-urgent" onclick="setShopPriority('urgent')">عاجل</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions"><button class="btn btn-primary" onclick="saveShop()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('shop')">إلغاء</button></div>
+      </div>
+      <div class="card"><div id="shopList"></div></div>
+    </section>
+
+    <!-- SAVINGS -->
+    <section class="screen" id="screen-savings">
+      <button class="back-link" onclick="goTo('more')">‹ رجوع للمزيد</button>
+      <div class="card savings-hero">
+        <div class="muted">لي جمعتي</div>
+        <div class="savings-big" id="savCurrent">0 درهم</div>
+        <div class="savings-of" id="savTarget">من هدف 0 درهم</div>
+        <div class="progress-track"><div class="progress-fill teal" id="savBar" style="width:0%"></div></div>
+        <div class="muted" style="margin-top:6px;" id="savRemain">باقي ليك 0 درهم</div>
       </div>
       <div class="card">
-        <h2>إضافة مصاريف / دخل جديد</h2>
-        <form id="add-transaction-form">
-          <div class="form-group"><label>الوصف</label><input type="text" id="title" placeholder="مثال: شراء مستلزمات, راتب..." required></div>
-          <div class="form-group"><label>المبلغ (د.م.)</label><input type="number" id="amount" step="0.01" placeholder="0.00" required></div>
-          <div class="form-group"><label>النوع</label><select id="type"><option value="expense">مصروف</option><option value="income">دخل</option></select></div>
-          <div class="form-group"><label>الفئة</label><select id="category"><option value="تغذية وتسوق">تغذية وتسوق</option><option value="سيارة ونقل">سيارة ونقل</option><option value="فواتير وخدمات">فواتير وخدمات</option><option value="تسلية">تسلية ومستلزمات</option><option value="عام">عام</option></select></div>
-          <button type="submit" class="btn">حفظ المعاملة</button>
-        </form>
+        <h2>هدف رأس المال</h2>
+        <div class="field"><label>المبلغ اللي باغي توصل ليه (درهم)</label><input id="f-sav-target" type="number" inputmode="decimal" placeholder="0"></div>
+        <button class="btn btn-primary" style="width:100%;" onclick="setSavTarget()">حفظ الهدف</button>
       </div>
-      <div class="card"><h2>آخر المعاملات</h2><ul id="transaction-list" class="item-list"></ul></div>
-    </section>
-
-    <section id="tab-reports" class="tab-content">
-      <div class="card text-center">
-        <h2>توزيع المصاريف حسب الفئة</h2>
-        <canvas id="expenseChart" width="240" height="240"></canvas>
-        <div id="chart-legend" style="text-align: right; margin-top: 10px;"></div>
-      </div>
-    </section>
-
-    <section id="tab-debts" class="tab-content">
       <div class="card">
-        <h2>تسجيل ديون / مستحقات</h2>
-        <form id="add-debt-form">
-          <div class="form-group"><label>الاسم / الجهة</label><input type="text" id="debt-person" placeholder="اسم الشخص أو المورد" required></div>
-          <div class="form-group"><label>المبلغ</label><input type="number" id="debt-amount" step="0.01" required></div>
-          <div class="form-group"><label>النوع</label><select id="debt-type"><option value="given">ديون لي (مستحقات)</option><option value="taken">ديون علي (التزامات)</option></select></div>
-          <button type="submit" class="btn">إضافة الدين</button>
-        </form>
+        <h2>زيد فلوس للادخار</h2>
+        <div class="two-col">
+          <div class="field"><label>المبلغ</label><input id="f-sav-amount" type="number" inputmode="decimal" placeholder="0"></div>
+          <div class="field"><label>ملاحظة (اختياري)</label><input id="f-sav-note" placeholder="مثلا: من الماهية"></div>
+        </div>
+        <div class="two-col">
+          <button class="btn btn-primary" onclick="addSaving(1)">+ نزيد</button>
+          <button class="btn btn-ghost" onclick="addSaving(-1)">- نسحب</button>
+        </div>
       </div>
-      <div class="card"><h2>قائمة الديون</h2><ul id="debt-list" class="item-list"></ul></div>
+      <div class="card"><h2>التاريخ ديال الادخار</h2><div id="savHistory"></div></div>
     </section>
 
-    <section id="tab-more" class="tab-content">
+    <!-- APPOINTMENTS -->
+    <section class="screen" id="screen-appts">
+      <button class="back-link" onclick="goTo('more')">‹ رجوع للمزيد</button>
+      <div class="segmented">
+        <button class="active" data-at="upcoming" onclick="setApptFilter('upcoming')">القادمة</button>
+        <button data-at="all" onclick="setApptFilter('all')">الكل</button>
+        <button data-at="work" onclick="setApptFilter('work')">الخدمة</button>
+        <button data-at="travel" onclick="setApptFilter('travel')">السفر</button>
+      </div>
+      <div class="fab-row"><button class="fab" onclick="toggleForm('appt')">+ زيد موعد</button></div>
+      <div class="form-panel hidden" id="form-appt">
+        <div class="field"><label>الموعد</label><input id="f-appt-title" placeholder="مثلا: اجتماع، طيارة، طبيب..."></div>
+        <div class="field"><label>النوع</label>
+          <div class="chip-select">
+            <div class="chip sel" id="appt-type-work" onclick="setApptType('work')">خدمة</div>
+            <div class="chip" id="appt-type-travel" onclick="setApptType('travel')">سفر</div>
+            <div class="chip" id="appt-type-other" onclick="setApptType('other')">أخرى</div>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field"><label>التاريخ</label><input id="f-appt-date" type="date"></div>
+          <div class="field"><label>الوقت (اختياري)</label><input id="f-appt-time" type="time"></div>
+        </div>
+        <div class="field"><label>المكان (اختياري)</label><input id="f-appt-location" placeholder="فين"></div>
+        <div class="form-actions"><button class="btn btn-primary" onclick="saveAppt()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('appt')">إلغاء</button></div>
+      </div>
+      <div class="card"><div id="apptsList"></div></div>
+    </section>
+
+    <!-- OCCASIONS -->
+    <section class="screen" id="screen-occasions">
+      <button class="back-link" onclick="goTo('more')">‹ رجوع للمزيد</button>
+      <div class="fab-row"><button class="fab" onclick="toggleForm('occ')">+ زيد مناسبة</button></div>
+      <div class="form-panel hidden" id="form-occ">
+        <div class="field"><label>المناسبة</label><div class="chip-select" id="f-occ-name-chips"></div></div>
+        <div class="field hidden" id="f-occ-custom-wrap"><label>سميها</label><input id="f-occ-custom" placeholder="مثلا: عيد ميلاد..."></div>
+        <div class="field"><label>الميزانية (درهم)</label><input id="f-occ-budget" type="number" inputmode="decimal" placeholder="0"></div>
+        <div class="form-actions"><button class="btn btn-primary" onclick="saveOcc()">حفظ</button><button class="btn btn-ghost" onclick="toggleForm('occ')">إلغاء</button></div>
+      </div>
+      <div id="occList"></div>
+    </section>
+
+    <!-- REPORT -->
+    <section class="screen" id="screen-report">
+      <button class="back-link" onclick="goTo('more')">‹ رجوع للمزيد</button>
+      <div class="segmented" id="reportMonthPicker"></div>
       <div class="card">
-        <h2>النسخ الاحتياطي واسترجاع البيانات</h2>
-        <p style="font-size: 0.85rem; color: var(--muted-color); margin-bottom: 12px;">احفظ بياناتك في ملف خارجي أو قم باسترجاعها في أي وقت للحفاظ على سجلاتك المالية.</p>
-        <button onclick="exportData()" class="btn btn-outline" style="margin-bottom: 10px;">📥 تحميل نسخة احتياطية (JSON)</button>
-        <input type="file" id="importFile" onchange="importData(event)" accept=".json" style="display: none;">
-        <button onclick="document.getElementById('importFile').click()" class="btn btn-outline">📤 استرجاع البيانات من ملف</button>
+        <h2>ملخص الشهر</h2>
+        <div class="two-col">
+          <div><div class="muted">الداخل</div><div class="li-amount pos" id="repIn">0 درهم</div></div>
+          <div><div class="muted">الخارج</div><div class="li-amount neg" id="repOut">0 درهم</div></div>
+        </div>
+        <div class="row-between" style="margin-top:10px; border-top:1px solid var(--line); padding-top:10px;">
+          <span class="muted">الرصيد</span><span class="li-amount" id="repBalance">0 درهم</span>
+        </div>
       </div>
-      <div class="card"><h2>إعادة ضبط التطبيق</h2><button onclick="clearAllData()" class="btn btn-danger">حذف جميع البيانات</button></div>
+      <div class="card">
+        <h2>فاين مشاو الفلوس</h2>
+        <div id="repCategories"></div>
+      </div>
+      <div class="card">
+        <h2>أكبر المصاريف هاد الشهر</h2>
+        <div id="repTop"></div>
+      </div>
     </section>
-  </div>
 
-  <div id="editModal" class="modal">
-    <div class="modal-content">
-      <h2 style="margin-bottom: 12px;">تعديل المعاملة</h2>
-      <div class="form-group"><label>الوصف</label><input type="text" id="edit-title"></div>
-      <div class="form-group"><label>المبلغ</label><input type="number" id="edit-amount" step="0.01"></div>
-      <div class="form-group"><label>الفئة</label><select id="edit-category"><option value="تغذية وتسوق">تغذية وتسوق</option><option value="سيارة ونقل">سيارة ونقل</option><option value="فواتير وخدمات">فواتير وخدمات</option><option value="تسلية">تسلية ومستلزمات</option><option value="عام">عام</option></select></div>
-      <div style="display: flex; gap: 8px; margin-top: 16px;">
-        <button onclick="saveEdit()" class="btn">حفظ التعديل</button>
-        <button onclick="closeEditModal()" class="btn btn-outline">إلغاء</button>
-      </div>
+  </main>
+
+  <nav class="bottomnav" id="bottomnav">
+    <button class="active" data-screen="dash" onclick="goTo('dash')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg>
+      <span class="nav-label">الرئيسية</span>
+    </button>
+    <button data-screen="money" onclick="goTo('money')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="17" cy="15" r="1" fill="currentColor"/></svg>
+      <span class="nav-label">مصاريفي</span>
+    </button>
+    <button data-screen="debts" onclick="goTo('debts')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>
+      <span class="nav-label">الديون</span>
+    </button>
+    <button data-screen="goals" onclick="goTo('goals')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
+      <span class="nav-label">الأهداف</span>
+    </button>
+    <button data-screen="more" onclick="goTo('more')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.8" fill="currentColor" stroke="none"/></svg>
+      <span class="nav-label">المزيد</span>
+    </button>
+  </nav>
+  <div class="toast" id="toast"></div>
+
+  <div class="quickform-overlay hidden" id="quickOverlay" onclick="if(event.target===this)closeQuickForm()">
+    <div class="quickform-sheet">
+      <div class="quickform-title" id="quickFormTitle">—</div>
+      <div class="field"><label id="quickFormAmountLabel">المبلغ</label><input id="quickFormAmount" type="number" inputmode="decimal" placeholder="0"></div>
+      <div class="field"><label>ملاحظة (اختياري)</label><input id="quickFormNote" placeholder=""></div>
+      <div class="form-actions"><button class="btn btn-primary" onclick="quickFormSave()">حفظ</button><button class="btn btn-ghost" onclick="closeQuickForm()">إلغاء</button></div>
     </div>
   </div>
+</div>
 
-  <nav class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('home', this)"><span class="icon">🏠</span><span>الرئيسية</span></div>
-    <div class="nav-item" onclick="switchTab('reports', this)"><span class="icon">📊</span><span>التقارير</span></div>
-    <div class="nav-item" onclick="switchTab('debts', this)"><span class="icon">🤝</span><span>الديون</span></div>
-    <div class="nav-item" onclick="switchTab('more', this)"><span class="icon">⚙️</span><span>المزيد</span></div>
-  </nav>
+<script>
+/* ---------------- state ---------------- */
+let state = {
+  fixedExpenses: [], transactions: [], shopping: [], goals: [],
+  savings: { target: 0, current: 0, history: [] },
+  debts: [], carItems: [], appointments: [], occasions: []
+};
+let ready = false;
+let txType = 'expense';
+let shopPriority = 'normal';
+let goalType = 'daily';
+let goalFilter = 'all';
+let debtType = 'owed_to_me';
+let apptType = 'work';
+let apptFilter = 'upcoming';
+let selectedMonth = monthKey(new Date());
+let selectedReportMonth = monthKey(new Date());
+let quickCtx = null;
 
-  <script>
-    let transactions = JSON.parse(localStorage.getItem('masarifi_transactions')) || [];
-    let debts = JSON.parse(localStorage.getItem('masarifi_debts')) || [];
-    let editingIndex = null;
+const FIXED_CATS = ['السكن','الكهرباء والماء','الإنترنت','السيارة','المدرسة','الصحة','أخرى'];
+const TX_CATS = [
+  {label:'الأكل', icon:'🍽️'}, {label:'النقل', icon:'🚕'}, {label:'الصحة', icon:'⚕️'},
+  {label:'الملابس', icon:'👕'}, {label:'المنزل', icon:'🏠'}, {label:'الترفيه', icon:'🎬'},
+  {label:'الفواتير', icon:'🧾'}, {label:'أخرى', icon:'💳'}
+];
+const CAR_TYPES = [
+  {key:'insurance', label:'التأمين', icon:'🛡️', interval:12},
+  {key:'visite', label:'الزيارة التقنية', icon:'🔧', interval:12},
+  {key:'vignette', label:'الضريبة السنوية (الفينيت)', icon:'📄', interval:12},
+  {key:'vidange', label:'فيدونج (تبديل الزيت)', icon:'🛢️', interval:6},
+  {key:'custom', label:'أخرى', icon:'🚗', interval:12}
+];
+const OCC_DEFAULTS = ['رمضان كريم','عيد الفطر (الصغير)','عيد الأضحى (الكبير)','دخول المدرسة','عطلة الصيف والسفر','أخرى'];
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js?v=2').catch(err => console.log('SW failed:', err));
+function monthKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function fmt(n){ n = Number(n)||0; return n.toLocaleString('en-US', {maximumFractionDigits: n%1===0?0:2}); }
+function money(n){ return fmt(n) + ' درهم'; }
+function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+function addMonths(dateStr, months){ const d = new Date(dateStr); d.setMonth(d.getMonth() + Number(months||0)); return d; }
+function daysUntil(date){
+  const a = new Date(todayStr());
+  const b = (date instanceof Date) ? new Date(date.toISOString().slice(0,10)) : new Date(date);
+  return Math.round((b-a)/86400000);
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------------- local storage persistence (works fully offline) ---------------- */
+function loadState(){
+  try{
+    const raw = localStorage.getItem('mizaniya-data');
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state = Object.assign(state, parsed);
+      if(!state.savings) state.savings = {target:0,current:0,history:[]};
+      if(!state.debts) state.debts = [];
+      if(!state.carItems) state.carItems = [];
+      if(!state.appointments) state.appointments = [];
+      if(!state.occasions) state.occasions = [];
     }
+  }catch(e){ /* first run, no data yet */ }
+  ready = true;
+  renderAll();
+}
+function saveState(){
+  if(!ready) return;
+  try{ localStorage.setItem('mizaniya-data', JSON.stringify(state)); }
+  catch(e){ showToast('ما قدرتش نحفظ، الذاكرة ديال الهاتف واحد'); }
+}
 
-    function switchTab(tabId, el) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-      document.getElementById('tab-' + tabId).classList.add('active');
-      el.classList.add('active');
-      if (tabId === 'reports') renderChart();
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* ---------------- install as app (PWA) ---------------- */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').classList.remove('hidden');
+});
+function installApp(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('installBtn').classList.add('hidden'); });
+}
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+}
+
+/* ---------------- nav ---------------- */
+const NAV_SCREENS = ['dash','money','debts','goals','more'];
+function goTo(screen){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+screen).classList.add('active');
+  const active = NAV_SCREENS.includes(screen) ? screen : 'more';
+  document.querySelectorAll('#bottomnav button').forEach(b=>b.classList.toggle('active', b.dataset.screen===active));
+  if(screen==='report') renderReport();
+  window.scrollTo(0,0);
+}
+function toggleForm(name){ document.getElementById('form-'+name).classList.toggle('hidden'); }
+function closeForm(name){ document.getElementById('form-'+name).classList.add('hidden'); }
+
+/* ---------------- quick form (shared mini modal) ---------------- */
+function openQuickForm(kind, id, title, amountLabel, notePlaceholder){
+  quickCtx = {kind, id};
+  document.getElementById('quickFormTitle').textContent = title;
+  document.getElementById('quickFormAmountLabel').textContent = amountLabel || 'المبلغ';
+  document.getElementById('quickFormAmount').value = '';
+  document.getElementById('quickFormNote').value = '';
+  document.getElementById('quickFormNote').placeholder = notePlaceholder || '';
+  document.getElementById('quickOverlay').classList.remove('hidden');
+}
+function closeQuickForm(){ document.getElementById('quickOverlay').classList.add('hidden'); quickCtx = null; }
+function quickFormSave(){
+  if(!quickCtx) return;
+  const amount = parseFloat(document.getElementById('quickFormAmount').value);
+  const note = document.getElementById('quickFormNote').value.trim();
+  if(isNaN(amount)){ showToast('عمر المبلغ'); return; }
+  if(quickCtx.kind==='debtPay'){
+    const d = state.debts.find(x=>x.id===quickCtx.id);
+    if(d){ d.payments.push({id:uid(), date:todayStr(), amount, note}); }
+    saveState(); renderDebts(); renderDashboard();
+    showToast('تسجل الخلاص');
+  } else if(quickCtx.kind==='occSpend'){
+    const o = state.occasions.find(x=>x.id===quickCtx.id);
+    if(o){ o.spent = (o.spent||0) + amount; }
+    saveState(); renderOccasions();
+    showToast('تسجل الصرف');
+  } else if(quickCtx.kind==='carRenew'){
+    const c = state.carItems.find(x=>x.id===quickCtx.id);
+    if(c){ c.lastDate = todayStr(); if(!isNaN(amount) && amount>0) c.cost = amount; }
+    saveState(); renderCar(); renderDashboard();
+    showToast('تحدّث');
+  }
+  closeQuickForm();
+}
+
+/* ---------------- render dispatcher ---------------- */
+function renderAll(){
+  renderTopDate();
+  buildFixedCatChips(); buildTxCatChips(); buildCarTypeChips(); buildOccChips();
+  renderDashboard(); renderFixed();
+  buildMonthPicker(); renderDaily();
+  renderCar(); renderShop(); renderGoals(); renderSavings();
+  renderDebts(); renderAppts(); renderOccasions(); renderMoreStats();
+}
+function renderTopDate(){
+  const d = new Date();
+  const months = ['يناير','فبراير','مارس','أبريل','ماي','يونيو','يوليوز','غشت','شتنبر','أكتوبر','نونبر','دجنبر'];
+  document.getElementById('topDate').textContent = months[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+/* ---------------- MONEY HUB TABS ---------------- */
+function setMoneyTab(tab){
+  ['fixed','daily','car'].forEach(t=>{ document.getElementById('mt-'+t).style.display = (t===tab)?'block':'none'; });
+  document.querySelectorAll('#screen-money .segmented button').forEach(b=>b.classList.toggle('active', b.dataset.mt===tab));
+}
+
+/* ---------------- FIXED EXPENSES ---------------- */
+function buildFixedCatChips(){
+  const box = document.getElementById('f-fixed-cat');
+  if(box.children.length) return;
+  box.innerHTML = FIXED_CATS.map((c,i)=>`<div class="chip${i===0?' sel':''}" data-cat="${c}" onclick="pickChip(this)">${c}</div>`).join('');
+}
+function pickChip(el){ el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); }
+function saveFixed(){
+  const name = document.getElementById('f-fixed-name').value.trim();
+  const amount = parseFloat(document.getElementById('f-fixed-amount').value);
+  const day = parseInt(document.getElementById('f-fixed-day').value) || 1;
+  const catEl = document.querySelector('#f-fixed-cat .chip.sel');
+  const cat = catEl ? catEl.dataset.cat : 'أخرى';
+  if(!name || !amount){ showToast('عمر الاسم والمبلغ'); return; }
+  state.fixedExpenses.push({id:uid(), name, amount, day, category:cat});
+  document.getElementById('f-fixed-name').value=''; document.getElementById('f-fixed-amount').value=''; document.getElementById('f-fixed-day').value='';
+  closeForm('fixed'); saveState(); renderFixed(); renderDashboard();
+  showToast('تزاد المصروف الثابت');
+}
+function deleteFixed(id){ state.fixedExpenses = state.fixedExpenses.filter(f=>f.id!==id); saveState(); renderFixed(); renderDashboard(); }
+function catIcon(cat){
+  const map = {'السكن':'🏠','الكهرباء والماء':'💡','الإنترنت':'📶','السيارة':'🚗','المدرسة':'🎒','الصحة':'⚕️'};
+  return map[cat] || '💳';
+}
+function renderFixed(){
+  const list = document.getElementById('fixedList');
+  const total = state.fixedExpenses.reduce((s,f)=>s+Number(f.amount),0);
+  document.getElementById('fixedTotal').textContent = money(total);
+  if(!state.fixedExpenses.length){ list.innerHTML = '<div class="empty-hint">مازال ما زدتي حتى مصروف ثابت. زيد الكراء، الكهرباء، الإنترنت...</div>'; return; }
+  const sorted = [...state.fixedExpenses].sort((a,b)=>a.day-b.day);
+  list.innerHTML = sorted.map(f=>`
+    <div class="list-item">
+      <div class="li-main"><div class="li-icon">${catIcon(f.category)}</div>
+        <div class="li-text"><div class="li-title">${escapeHtml(f.name)}</div><div class="li-sub">${f.category} · اليوم ${f.day} فالشهر</div></div>
+      </div>
+      <div style="display:flex; align-items:center;"><div class="li-amount neg">${money(f.amount)}</div><button class="li-del" onclick="deleteFixed('${f.id}')">✕</button></div>
+    </div>`).join('');
+}
+
+/* ---------------- DAILY TRANSACTIONS ---------------- */
+function buildTxCatChips(){
+  const box = document.getElementById('f-tx-cat');
+  if(box.children.length) return;
+  box.innerHTML = TX_CATS.map((c,i)=>`<div class="chip${i===0?' sel':''}" data-cat="${c.label}" onclick="pickChip(this)">${c.icon} ${c.label}</div>`).join('');
+}
+function setTxType(t){
+  txType = t;
+  document.getElementById('tx-type-expense').classList.toggle('sel', t==='expense');
+  document.getElementById('tx-type-income').classList.toggle('sel', t==='income');
+  document.getElementById('tx-cat-wrap').classList.toggle('hidden', t==='income');
+}
+function saveTx(){
+  const amount = parseFloat(document.getElementById('f-tx-amount').value);
+  let date = document.getElementById('f-tx-date').value;
+  if(!date) date = todayStr();
+  const note = document.getElementById('f-tx-note').value.trim();
+  const catEl = document.querySelector('#f-tx-cat .chip.sel');
+  const category = (txType==='expense') ? (catEl ? catEl.dataset.cat : 'أخرى') : '';
+  if(!amount){ showToast('عمر المبلغ'); return; }
+  state.transactions.push({id:uid(), type:txType, amount, date, note, category});
+  document.getElementById('f-tx-amount').value=''; document.getElementById('f-tx-note').value='';
+  closeForm('tx'); selectedMonth = date.slice(0,7);
+  saveState(); buildMonthPicker(); renderDaily(); renderDashboard();
+  showToast('تزادت العملية');
+}
+function deleteTx(id){ state.transactions = state.transactions.filter(t=>t.id!==id); saveState(); renderDaily(); renderDashboard(); }
+function txCatIcon(label){ const f = TX_CATS.find(c=>c.label===label); return f?f.icon:'💳'; }
+function buildMonthPickerGeneric(boxId, currentGetter, currentSetter, onPick){
+  const months = new Set(state.transactions.map(t=>t.date.slice(0,7)));
+  months.add(monthKey(new Date()));
+  const arr = [...months].sort().reverse().slice(0,6);
+  if(!arr.includes(currentGetter())) currentSetter(arr[0]);
+  const box = document.getElementById(boxId);
+  box.innerHTML = arr.map(m=>{
+    const [y,mo] = m.split('-');
+    const names = ['ين','فب','مار','أب','ماي','يون','يول','غش','شت','أك','نون','دج'];
+    const label = names[parseInt(mo)-1]+' '+y;
+    return `<button class="${m===currentGetter()?'active':''}" onclick="${onPick}('${m}')">${label}</button>`;
+  }).join('');
+}
+function buildMonthPicker(){ buildMonthPickerGeneric('dailyMonthPicker', ()=>selectedMonth, (v)=>selectedMonth=v, 'pickMonth'); }
+function pickMonth(m){ selectedMonth = m; buildMonthPicker(); renderDaily(); }
+function renderDaily(){
+  const items = state.transactions.filter(t=>t.date.slice(0,7)===selectedMonth).sort((a,b)=>b.date.localeCompare(a.date));
+  const inc = items.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount),0);
+  const out = items.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount),0);
+  document.getElementById('dailyIn').textContent = money(inc);
+  document.getElementById('dailyOut').textContent = money(out);
+  const list = document.getElementById('dailyList');
+  if(!items.length){ list.innerHTML = '<div class="empty-hint">مازال ماكاين والو فهاد الشهر. زيد أول عملية ديالك.</div>'; return; }
+  list.innerHTML = items.map(t=>`
+    <div class="list-item">
+      <div class="li-main">
+        <div class="li-icon ${t.type==='income'?'good':'bad'}">${t.type==='income'?'⬆':(t.category?txCatIcon(t.category):'⬇')}</div>
+        <div class="li-text">
+          <div class="li-title">${t.note ? escapeHtml(t.note) : (t.type==='income'?'دخل':(t.category||'مصروف'))}</div>
+          <div class="li-sub">${t.type==='expense' && t.category ? t.category+' · ':''}${t.date}</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center;">
+        <div class="li-amount ${t.type==='income'?'pos':'neg'}">${t.type==='income'?'+':'-'}${money(t.amount)}</div>
+        <button class="li-del" onclick="deleteTx('${t.id}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ---------------- CAR ---------------- */
+function buildCarTypeChips(){
+  const box = document.getElementById('f-car-type');
+  if(box.children.length) return;
+  box.innerHTML = CAR_TYPES.map((c,i)=>`<div class="chip${i===0?' sel':''}" data-key="${c.key}" data-interval="${c.interval}" onclick="pickCarType(this)">${c.icon} ${c.label}</div>`).join('');
+}
+function pickCarType(el){
+  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  const isCustom = el.dataset.key==='custom';
+  document.getElementById('f-car-custom-wrap').classList.toggle('hidden', !isCustom);
+  document.getElementById('f-car-interval').value = el.dataset.interval;
+}
+function saveCar(){
+  const catEl = document.querySelector('#f-car-type .chip.sel');
+  const key = catEl ? catEl.dataset.key : 'custom';
+  const typeObj = CAR_TYPES.find(t=>t.key===key);
+  const name = key==='custom' ? (document.getElementById('f-car-custom').value.trim() || 'حاجة أخرى') : typeObj.label;
+  const lastDate = document.getElementById('f-car-lastdate').value || todayStr();
+  const interval = parseInt(document.getElementById('f-car-interval').value) || 12;
+  const cost = parseFloat(document.getElementById('f-car-cost').value) || 0;
+  if(key==='custom' && !document.getElementById('f-car-custom').value.trim()){ showToast('سمي الحاجة'); return; }
+  state.carItems.push({id:uid(), key, name, lastDate, interval, cost});
+  document.getElementById('f-car-custom').value=''; document.getElementById('f-car-lastdate').value=''; document.getElementById('f-car-cost').value='';
+  closeForm('car'); saveState(); renderCar(); renderDashboard();
+  showToast('تزادت للسيارة');
+}
+function deleteCar(id){ state.carItems = state.carItems.filter(c=>c.id!==id); saveState(); renderCar(); renderDashboard(); }
+function carIcon(key){ const t = CAR_TYPES.find(x=>x.key===key); return t ? t.icon : '🚗'; }
+function carStatus(item){
+  const next = addMonths(item.lastDate, item.interval);
+  const diff = daysUntil(next);
+  const nextStr = next.toISOString().slice(0,10);
+  if(diff < 0) return {badge:'bad', text:'متأخر ب '+Math.abs(diff)+' يوم', next: nextStr};
+  if(diff <= 30) return {badge:'ochre', text:'قريب: باقي '+diff+' يوم', next: nextStr};
+  return {badge:'good', text:'باقي '+diff+' يوم', next: nextStr};
+}
+function renderCar(){
+  const list = document.getElementById('carList');
+  const total = state.carItems.reduce((s,c)=>s+Number(c.cost||0),0);
+  document.getElementById('carTotal').textContent = money(total);
+  if(!state.carItems.length){ list.innerHTML = '<div class="empty-hint">زيد التأمين، الزيارة التقنية، الفينيت، فيدونج الزيت... باش نتبعو ليك التواريخ.</div>'; return; }
+  const sorted = [...state.carItems].sort((a,b)=> daysUntil(addMonths(a.lastDate,a.interval)) - daysUntil(addMonths(b.lastDate,b.interval)));
+  list.innerHTML = sorted.map(c=>{
+    const st = carStatus(c);
+    return `
+    <div class="list-item">
+      <div class="li-main"><div class="li-icon">${carIcon(c.key)}</div>
+        <div class="li-text"><div class="li-title">${escapeHtml(c.name)}</div><div class="li-sub">آخر مرة: ${c.lastDate} · القادمة: ${st.next}</div></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;"><span class="badge ${st.badge}">${st.text}</span></div>
+    </div>
+    <div style="display:flex; gap:8px; padding:0 2px 12px; justify-content:flex-end;">
+      <button class="btn-small" onclick="openQuickForm('carRenew','${c.id}','${escapeHtml(c.name)} — تجديد اليوم','الثمن الجديد (اختياري)')">✓ بدلتها دابا</button>
+      <button class="li-del" onclick="deleteCar('${c.id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- SHOPPING ---------------- */
+function setShopPriority(p){
+  shopPriority = p;
+  document.getElementById('shop-pr-normal').classList.toggle('sel', p==='normal');
+  document.getElementById('shop-pr-urgent').classList.toggle('sel', p==='urgent');
+}
+function saveShop(){
+  const name = document.getElementById('f-shop-name').value.trim();
+  const price = parseFloat(document.getElementById('f-shop-price').value) || 0;
+  if(!name){ showToast('عمر اسم الحاجة'); return; }
+  state.shopping.push({id:uid(), name, price, priority:shopPriority, bought:false});
+  document.getElementById('f-shop-name').value=''; document.getElementById('f-shop-price').value='';
+  closeForm('shop'); saveState(); renderShop(); renderMoreStats();
+  showToast('تزادت للائحة');
+}
+function toggleBought(id){ const it = state.shopping.find(s=>s.id===id); if(it) it.bought = !it.bought; saveState(); renderShop(); renderMoreStats(); }
+function deleteShop(id){ state.shopping = state.shopping.filter(s=>s.id!==id); saveState(); renderShop(); renderMoreStats(); }
+function renderShop(){
+  const remain = state.shopping.filter(s=>!s.bought).reduce((s,i)=>s+Number(i.price),0);
+  document.getElementById('shopTotal').textContent = money(remain);
+  const list = document.getElementById('shopList');
+  if(!state.shopping.length){ list.innerHTML = '<div class="empty-hint">اللائحة فارغة. زيد شنو باغي تشري للدار.</div>'; return; }
+  const sorted = [...state.shopping].sort((a,b)=> (a.bought - b.bought) || (a.priority==='urgent'?-1:1) - (b.priority==='urgent'?-1:1));
+  list.innerHTML = sorted.map(s=>`
+    <div class="list-item">
+      <div class="li-main">
+        <input type="checkbox" ${s.bought?'checked':''} onchange="toggleBought('${s.id}')" style="width:19px;height:19px;flex:none;">
+        <div class="li-text"><div class="li-title" style="${s.bought?'text-decoration:line-through;color:var(--ink-soft);':''}">${escapeHtml(s.name)}</div><div class="li-sub">${s.priority==='urgent'?'عاجل':'عادي'}</div></div>
+      </div>
+      <div style="display:flex; align-items:center;"><div class="li-amount">${money(s.price)}</div><button class="li-del" onclick="deleteShop('${s.id}')">✕</button></div>
+    </div>`).join('');
+}
+
+/* ---------------- GOALS ---------------- */
+function setGoalType(t){
+  goalType = t;
+  ['daily','monthly','yearly','project'].forEach(k=>document.getElementById('goal-type-'+k).classList.toggle('sel', k===t));
+}
+function setGoalFilter(t){
+  goalFilter = t;
+  document.querySelectorAll('#screen-goals .segmented button').forEach(b=>b.classList.toggle('active', b.dataset.gt===t));
+  renderGoals();
+}
+function saveGoal(){
+  const title = document.getElementById('f-goal-title').value.trim();
+  const deadline = document.getElementById('f-goal-deadline').value;
+  if(!title){ showToast('عمر الهدف'); return; }
+  state.goals.push({id:uid(), title, type:goalType, deadline, progress:0, done:false});
+  document.getElementById('f-goal-title').value=''; document.getElementById('f-goal-deadline').value='';
+  closeForm('goal'); saveState(); renderGoals(); renderDashboard();
+  showToast('تزاد الهدف');
+}
+function stepGoal(id, delta){
+  const g = state.goals.find(x=>x.id===id); if(!g) return;
+  g.progress = Math.min(100, Math.max(0, g.progress + delta)); g.done = g.progress>=100;
+  saveState(); renderGoals(); renderDashboard();
+}
+function deleteGoal(id){ state.goals = state.goals.filter(g=>g.id!==id); saveState(); renderGoals(); renderDashboard(); }
+const goalTypeLabel = {daily:'يومي', monthly:'شهري', yearly:'سنوي', project:'مشروع'};
+function renderGoals(){
+  const box = document.getElementById('goalsList');
+  let items = state.goals;
+  if(goalFilter!=='all') items = items.filter(g=>g.type===goalFilter);
+  if(!items.length){ box.innerHTML = '<div class="empty-hint">ماكاين حتى هدف هنا. زيد هدف باش تبدا تتبعو.</div>'; return; }
+  box.innerHTML = items.map(g=>`
+    <div class="goal-card ${g.done?'done':''}">
+      <div class="goal-top"><div><div class="goal-title">${escapeHtml(g.title)}</div>${g.deadline?`<div class="goal-deadline">آخر أجل: ${g.deadline}</div>`:''}</div>
+        <span class="goal-tag">${goalTypeLabel[g.type]}</span></div>
+      <div class="progress-track" style="margin-top:9px;"><div class="progress-fill ${g.done?'good':'teal'}" style="width:${g.progress}%"></div></div>
+      <div class="goal-actions">
+        <button class="step-btn" onclick="stepGoal('${g.id}',-10)">−</button>
+        <button class="step-btn" onclick="stepGoal('${g.id}',10)">+</button>
+        <span class="goal-pct">${g.progress}%</span>
+        <button class="li-del" onclick="deleteGoal('${g.id}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ---------------- SAVINGS ---------------- */
+function setSavTarget(){
+  const v = parseFloat(document.getElementById('f-sav-target').value);
+  if(!v){ showToast('عمر المبلغ ديال الهدف'); return; }
+  state.savings.target = v; document.getElementById('f-sav-target').value='';
+  saveState(); renderSavings(); renderDashboard(); renderMoreStats();
+  showToast('تحفظ الهدف');
+}
+function addSaving(sign){
+  const amount = parseFloat(document.getElementById('f-sav-amount').value);
+  const note = document.getElementById('f-sav-note').value.trim();
+  if(!amount){ showToast('عمر المبلغ'); return; }
+  const val = sign * amount;
+  state.savings.current = Math.max(0, (state.savings.current||0) + val);
+  state.savings.history.unshift({id:uid(), date:todayStr(), amount:val, note});
+  document.getElementById('f-sav-amount').value=''; document.getElementById('f-sav-note').value='';
+  saveState(); renderSavings(); renderDashboard(); renderMoreStats();
+  showToast(sign>0?'تزادت الفلوس للادخار':'تسحبات الفلوس');
+}
+function deleteSavHist(id){
+  const h = state.savings.history.find(x=>x.id===id);
+  if(h) state.savings.current = Math.max(0, state.savings.current - h.amount);
+  state.savings.history = state.savings.history.filter(x=>x.id!==id);
+  saveState(); renderSavings(); renderDashboard(); renderMoreStats();
+}
+function renderSavings(){
+  const {target, current, history} = state.savings;
+  document.getElementById('savCurrent').textContent = money(current||0);
+  document.getElementById('savTarget').textContent = 'من هدف ' + money(target||0);
+  const pct = target>0 ? Math.min(100, Math.round((current/target)*100)) : 0;
+  document.getElementById('savBar').style.width = pct+'%';
+  document.getElementById('savRemain').textContent = target>0 ? ('باقي ليك ' + money(Math.max(0,target-current))) : 'حدد هدف باش نحسبو ليك الباقي';
+  document.getElementById('f-sav-target').value = target||'';
+  const hist = document.getElementById('savHistory');
+  if(!history.length){ hist.innerHTML = '<div class="empty-hint">مازال ما زدتي حتى فلوس للادخار.</div>'; return; }
+  hist.innerHTML = history.slice(0,30).map(h=>`
+    <div class="list-item">
+      <div class="li-main"><div class="li-icon ${h.amount>=0?'good':'bad'}">${h.amount>=0?'⬆':'⬇'}</div>
+        <div class="li-text"><div class="li-title">${h.note?escapeHtml(h.note):(h.amount>=0?'زيادة':'سحب')}</div><div class="li-sub">${h.date}</div></div>
+      </div>
+      <div style="display:flex; align-items:center;"><div class="li-amount ${h.amount>=0?'pos':'neg'}">${h.amount>=0?'+':''}${money(h.amount)}</div><button class="li-del" onclick="deleteSavHist('${h.id}')">✕</button></div>
+    </div>`).join('');
+}
+
+/* ---------------- DEBTS ---------------- */
+function setDebtType(t){
+  debtType = t;
+  document.getElementById('debt-type-owed').classList.toggle('sel', t==='owed_to_me');
+  document.getElementById('debt-type-iowe').classList.toggle('sel', t==='i_owe');
+}
+function saveDebt(){
+  const person = document.getElementById('f-debt-person').value.trim();
+  const total = parseFloat(document.getElementById('f-debt-total').value);
+  const date = document.getElementById('f-debt-date').value || todayStr();
+  const note = document.getElementById('f-debt-note').value.trim();
+  if(!person || !total){ showToast('عمر شكون والمبلغ'); return; }
+  state.debts.push({id:uid(), person, type:debtType, total, date, note, payments:[]});
+  document.getElementById('f-debt-person').value=''; document.getElementById('f-debt-total').value=''; document.getElementById('f-debt-note').value='';
+  closeForm('debt'); saveState(); renderDebts(); renderDashboard();
+  showToast('تزاد الدين');
+}
+function deleteDebt(id){ state.debts = state.debts.filter(d=>d.id!==id); saveState(); renderDebts(); renderDashboard(); }
+function renderDebts(){
+  const box = document.getElementById('debtsList');
+  let owedToMe = 0, iOwe = 0;
+  state.debts.forEach(d=>{
+    const paid = (d.payments||[]).reduce((s,p)=>s+Number(p.amount),0);
+    const remain = Math.max(0, d.total - paid);
+    if(d.type==='owed_to_me') owedToMe += remain; else iOwe += remain;
+  });
+  document.getElementById('debtsTotalOwedToMe').textContent = money(owedToMe);
+  document.getElementById('debtsTotalIOwe').textContent = money(iOwe);
+  document.getElementById('dashDebtsOwedToMe').textContent = money(owedToMe);
+  document.getElementById('dashDebtsIOwe').textContent = money(iOwe);
+  if(!state.debts.length){ box.innerHTML = '<div class="empty-hint">ماكاين حتى دين مسجل. زيد الدين ديالك مع شكون.</div>'; return; }
+  const sorted = [...state.debts].sort((a,b)=>b.date.localeCompare(a.date));
+  box.innerHTML = sorted.map(d=>{
+    const paid = (d.payments||[]).reduce((s,p)=>s+Number(p.amount),0);
+    const remain = Math.max(0, d.total - paid);
+    const pct = d.total>0 ? Math.min(100, Math.round((paid/d.total)*100)) : 0;
+    const done = remain<=0;
+    return `
+    <div class="goal-card ${done?'done':''}">
+      <div class="goal-top">
+        <div><div class="goal-title">${escapeHtml(d.person)}</div><div class="goal-deadline">${d.note?escapeHtml(d.note)+' · ':''}${d.date}</div></div>
+        <span class="goal-tag" style="${d.type==='owed_to_me'?'background:var(--good-soft);color:var(--good);':'background:var(--bad-soft);color:var(--bad);'}">${d.type==='owed_to_me'?'ليا':'علي'}</span>
+      </div>
+      <div class="progress-track" style="margin-top:9px;"><div class="progress-fill ${done?'good':'teal'}" style="width:${pct}%"></div></div>
+      <div class="row-between" style="margin-top:6px; font-size:12.5px;">
+        <span class="muted">خلص: ${money(paid)} من ${money(d.total)}</span>
+        <span style="font-weight:800; color:${done?'var(--good)':'var(--bad)'};">${done?'تخلص كاملا':'باقي '+money(remain)}</span>
+      </div>
+      <div class="goal-actions">
+        ${!done?`<button class="btn-small" onclick="openQuickForm('debtPay','${d.id}','${escapeHtml(d.person)} — تسجيل خلاص','المبلغ اللي خلص دابا')">+ سجل خلاص</button>`:''}
+        <button class="li-del" onclick="deleteDebt('${d.id}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ---------------- APPOINTMENTS ---------------- */
+function setApptType(t){
+  apptType = t;
+  ['work','travel','other'].forEach(k=>document.getElementById('appt-type-'+k).classList.toggle('sel', k===t));
+}
+function setApptFilter(t){
+  apptFilter = t;
+  document.querySelectorAll('#screen-appts .segmented button').forEach(b=>b.classList.toggle('active', b.dataset.at===t));
+  renderAppts();
+}
+function saveAppt(){
+  const title = document.getElementById('f-appt-title').value.trim();
+  const date = document.getElementById('f-appt-date').value;
+  const time = document.getElementById('f-appt-time').value;
+  const location = document.getElementById('f-appt-location').value.trim();
+  if(!title || !date){ showToast('عمر الموعد والتاريخ'); return; }
+  state.appointments.push({id:uid(), title, type:apptType, date, time, location});
+  document.getElementById('f-appt-title').value=''; document.getElementById('f-appt-date').value=''; document.getElementById('f-appt-time').value=''; document.getElementById('f-appt-location').value='';
+  closeForm('appt'); saveState(); renderAppts(); renderDashboard(); renderMoreStats();
+  showToast('تزاد الموعد');
+}
+function deleteAppt(id){ state.appointments = state.appointments.filter(a=>a.id!==id); saveState(); renderAppts(); renderDashboard(); renderMoreStats(); }
+function renderAppts(){
+  const box = document.getElementById('apptsList');
+  let items = [...state.appointments];
+  const today = todayStr();
+  if(apptFilter==='upcoming') items = items.filter(a=>a.date >= today);
+  else if(apptFilter==='work' || apptFilter==='travel') items = items.filter(a=>a.type===apptFilter);
+  items.sort((a,b)=> (a.date+((a.time)||'00:00')).localeCompare(b.date+((b.time)||'00:00')));
+  if(!items.length){ box.innerHTML = '<div class="empty-hint">ماكاين حتى موعد. زيد موعد ديال الخدمة ولا السفر.</div>'; return; }
+  box.innerHTML = items.map(a=>{
+    const isPast = a.date < today;
+    const diff = daysUntil(a.date);
+    let badge = '';
+    if(!isPast){
+      if(diff===0) badge = '<span class="badge ochre">اليوم</span>';
+      else if(diff<=3) badge = `<span class="badge ochre">قريب: ${diff} يام</span>`;
+      else badge = `<span class="badge good">باقي ${diff} يوم</span>`;
     }
+    return `
+    <div class="list-item" style="${isPast?'opacity:.5;':''}">
+      <div class="li-main"><div class="li-icon ${a.type==='travel'?'ochre':'good'}">${a.type==='travel'?'✈️':a.type==='work'?'💼':'📌'}</div>
+        <div class="li-text"><div class="li-title">${escapeHtml(a.title)}</div><div class="li-sub">${a.date}${a.time?' · '+a.time:''}${a.location?' · '+escapeHtml(a.location):''}</div></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:6px;">${badge}<button class="li-del" onclick="deleteAppt('${a.id}')">✕</button></div>
+    </div>`;
+  }).join('');
+}
 
-    document.getElementById('add-transaction-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const title = document.getElementById('title').value;
-      const amount = parseFloat(document.getElementById('amount').value);
-      const type = document.getElementById('type').value;
-      const category = document.getElementById('category').value;
-      transactions.unshift({ title, amount, type, category, date: new Date().toLocaleDateString('ar-MA') });
-      saveAndRender();
-      this.reset();
-    });
+/* ---------------- OCCASIONS ---------------- */
+function buildOccChips(){
+  const box = document.getElementById('f-occ-name-chips');
+  if(box.children.length) return;
+  box.innerHTML = OCC_DEFAULTS.map((c,i)=>`<div class="chip${i===0?' sel':''}" data-name="${c}" onclick="pickOcc(this)">${c}</div>`).join('');
+}
+function pickOcc(el){
+  el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('f-occ-custom-wrap').classList.toggle('hidden', el.dataset.name!=='أخرى');
+}
+function saveOcc(){
+  const nameEl = document.querySelector('#f-occ-name-chips .chip.sel');
+  const isCustom = nameEl && nameEl.dataset.name==='أخرى';
+  const name = isCustom ? document.getElementById('f-occ-custom').value.trim() : (nameEl ? nameEl.dataset.name : '');
+  const budget = parseFloat(document.getElementById('f-occ-budget').value) || 0;
+  if(!name){ showToast('عمر اسم المناسبة'); return; }
+  state.occasions.push({id:uid(), name, budget, spent:0});
+  document.getElementById('f-occ-custom').value=''; document.getElementById('f-occ-budget').value='';
+  closeForm('occ'); saveState(); renderOccasions(); renderMoreStats();
+  showToast('تزادت المناسبة');
+}
+function deleteOcc(id){ state.occasions = state.occasions.filter(o=>o.id!==id); saveState(); renderOccasions(); renderMoreStats(); }
+function renderOccasions(){
+  const box = document.getElementById('occList');
+  if(!state.occasions.length){ box.innerHTML = '<div class="empty-hint">زيد ميزانية لرمضان، الأعياد، دخول المدرسة، ولا عطلة الصيف.</div>'; return; }
+  box.innerHTML = state.occasions.map(o=>{
+    const pct = o.budget>0 ? Math.min(100, Math.round((o.spent/o.budget)*100)) : 0;
+    const over = o.spent > o.budget && o.budget>0;
+    return `
+    <div class="goal-card">
+      <div class="goal-top"><div class="goal-title">${escapeHtml(o.name)}</div><span class="goal-tag">${money(o.budget)}</span></div>
+      <div class="progress-track" style="margin-top:9px;"><div class="progress-fill ${over?'bad':'teal'}" style="width:${pct}%"></div></div>
+      <div class="row-between" style="margin-top:6px; font-size:12.5px;">
+        <span class="muted">صرفتي: ${money(o.spent)}</span>
+        <span style="font-weight:800; color:${over?'var(--bad)':'var(--ink-soft)'};">${over?'فقتي الميزانية':'باقي '+money(Math.max(0,o.budget-o.spent))}</span>
+      </div>
+      <div class="goal-actions">
+        <button class="btn-small" onclick="openQuickForm('occSpend','${o.id}','${escapeHtml(o.name)} — صرف جديد','المبلغ اللي صرفتي')">+ صرف</button>
+        <button class="li-del" onclick="deleteOcc('${o.id}')">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
 
-    document.getElementById('add-debt-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const person = document.getElementById('debt-person').value;
-      const amount = parseFloat(document.getElementById('debt-amount').value);
-      const type = document.getElementById('debt-type').value;
-      debts.unshift({ person, amount, type });
-      localStorage.setItem('masarifi_debts', JSON.stringify(debts));
-      renderDebts();
-      this.reset();
-    });
+/* ---------------- REPORT ---------------- */
+function reportBuildMonthPicker(){ buildMonthPickerGeneric('reportMonthPicker', ()=>selectedReportMonth, (v)=>selectedReportMonth=v, 'reportPickMonth'); }
+function reportPickMonth(m){ selectedReportMonth = m; reportBuildMonthPicker(); renderReport(); }
+function renderReport(){
+  reportBuildMonthPicker();
+  const items = state.transactions.filter(t=>t.date.slice(0,7)===selectedReportMonth);
+  const inc = items.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount),0);
+  const varOut = items.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount),0);
+  const fixedTotal = state.fixedExpenses.reduce((s,f)=>s+Number(f.amount),0);
+  const totalOut = varOut + fixedTotal;
+  document.getElementById('repIn').textContent = money(inc);
+  document.getElementById('repOut').textContent = money(totalOut);
+  document.getElementById('repBalance').textContent = money(inc-totalOut);
 
-    function saveAndRender() {
-      localStorage.setItem('masarifi_transactions', JSON.stringify(transactions));
-      renderTransactions();
-    }
+  // category breakdown
+  const byCat = {};
+  items.filter(t=>t.type==='expense').forEach(t=>{
+    const key = t.category || 'أخرى';
+    byCat[key] = (byCat[key]||0) + Number(t.amount);
+  });
+  if(fixedTotal>0) byCat['مصاريف ثابتة'] = (byCat['مصاريف ثابتة']||0) + fixedTotal;
+  const rows = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+  const maxVal = rows.length ? rows[0][1] : 1;
+  const catBox = document.getElementById('repCategories');
+  if(!rows.length){ catBox.innerHTML = '<div class="empty-hint">ماكاين حتى مصروف فهاد الشهر بعد.</div>'; }
+  else {
+    catBox.innerHTML = rows.map(([name,val])=>`
+      <div class="bar-row">
+        <div class="row-between"><span style="font-weight:700; font-size:13.5px;">${name==='مصاريف ثابتة'?'💳 ':txCatIcon(name)+' '}${escapeHtml(name)}</span><span class="muted">${money(val)}</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.max(4,Math.round((val/maxVal)*100))}%"></div></div>
+      </div>`).join('');
+  }
 
-    function renderTransactions() {
-      const list = document.getElementById('transaction-list');
-      list.innerHTML = '';
-      let incomeSum = 0, expenseSum = 0;
-      transactions.forEach((item, index) => {
-        if (item.type === 'income') incomeSum += item.amount;
-        else expenseSum += item.amount;
-        const li = document.createElement('li');
-        li.className = 'item-row';
-        li.innerHTML = `
-          <div class="item-info"><div class="title">${item.title}</div><div class="subtitle">${item.category} • ${item.date || ''}</div></div>
-          <div class="item-actions">
-            <span class="amount" style="color: ${item.type === 'income' ? 'var(--success-color)' : 'var(--danger-color)'}">${item.type === 'income' ? '+' : '-'}${item.amount.toFixed(2)} د.م.</span>
-            <button class="btn btn-outline btn-icon" onclick="openEditModal(${index})">✏️</button>
-            <button class="btn btn-danger btn-icon" onclick="deleteTransaction(${index})">✕</button>
-          </div>`;
-        list.appendChild(li);
-      });
-      document.getElementById('total-income').innerText = incomeSum.toFixed(2) + ' د.م.';
-      document.getElementById('total-expense').innerText = expenseSum.toFixed(2) + ' د.م.';
-    }
+  // top expenses
+  const topBox = document.getElementById('repTop');
+  const topItems = items.filter(t=>t.type==='expense').sort((a,b)=>b.amount-a.amount).slice(0,6);
+  if(!topItems.length){ topBox.innerHTML = '<div class="empty-hint">ماكاين مصاريف فهاد الشهر بعد.</div>'; }
+  else {
+    topBox.innerHTML = topItems.map(t=>`
+      <div class="list-item">
+        <div class="li-main"><div class="li-icon bad">${txCatIcon(t.category)}</div>
+          <div class="li-text"><div class="li-title">${t.note?escapeHtml(t.note):(t.category||'مصروف')}</div><div class="li-sub">${t.date}</div></div>
+        </div>
+        <div class="li-amount neg">${money(t.amount)}</div>
+      </div>`).join('');
+  }
+}
 
-    function renderDebts() {
-      const list = document.getElementById('debt-list');
-      list.innerHTML = '';
-      debts.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'item-row';
-        li.innerHTML = `
-          <div class="item-info"><div class="title">${item.person}</div><div class="subtitle">${item.type === 'given' ? 'له علي / مستحق له' : 'علي له / التزام عليه'}</div></div>
-          <div class="item-actions">
-            <span class="amount" style="color: ${item.type === 'given' ? 'var(--success-color)' : 'var(--danger-color)'}">${item.amount.toFixed(2)} د.م.</span>
-            <button class="btn btn-danger btn-icon" onclick="deleteDebt(${index})">✕</button>
-          </div>`;
-        list.appendChild(li);
-      });
-    }
+/* ---------------- MORE HUB STATS ---------------- */
+function renderMoreStats(){
+  const remainShop = state.shopping.filter(s=>!s.bought).length;
+  document.getElementById('moreShopStat').textContent = remainShop ? (remainShop+' حاجة باقية') : 'اللائحة خاوية';
+  const {target, current} = state.savings;
+  const pct = target>0 ? Math.min(100, Math.round((current/target)*100)) : 0;
+  document.getElementById('moreSavStat').textContent = target>0 ? (pct+'% وصلتي') : 'ماكاين هدف';
+  const upcoming = state.appointments.filter(a=>a.date>=todayStr()).length;
+  document.getElementById('moreApptStat').textContent = upcoming ? (upcoming+' موعد قادم') : 'ماكاين موعد';
+  document.getElementById('moreOccStat').textContent = state.occasions.length ? (state.occasions.length+' مناسبة') : 'زيد وحدة';
+}
 
-    function deleteTransaction(index) {
-      if (confirm('هل تريد حذف هذه المعاملة؟')) { transactions.splice(index, 1); saveAndRender(); }
-    }
+/* ---------------- DASHBOARD ---------------- */
+function renderDashboard(){
+  const thisMonth = monthKey(new Date());
+  const fixedTotal = state.fixedExpenses.reduce((s,f)=>s+Number(f.amount),0);
+  const txThisMonth = state.transactions.filter(t=>t.date.slice(0,7)===thisMonth);
+  const incomeThisMonth = txThisMonth.filter(t=>t.type==='income').reduce((s,t)=>s+Number(t.amount),0);
+  const expenseThisMonth = txThisMonth.filter(t=>t.type==='expense').reduce((s,t)=>s+Number(t.amount),0);
+  const totalOut = fixedTotal + expenseThisMonth;
+  const balance = incomeThisMonth - totalOut;
+  document.getElementById('dashBalance').innerHTML = fmt(balance) + '<span>درهم</span>';
+  document.getElementById('dashIncome').textContent = money(incomeThisMonth);
+  document.getElementById('dashOutcome').textContent = money(totalOut);
 
-    function deleteDebt(index) {
-      if (confirm('هل تريد حذف هذا الدين؟')) { debts.splice(index, 1); localStorage.setItem('masarifi_debts', JSON.stringify(debts)); renderDebts(); }
-    }
+  const {target, current} = state.savings;
+  const pct = target>0 ? Math.min(100, Math.round((current/target)*100)) : 0;
+  document.getElementById('dashSavingsPct').textContent = pct+'%';
+  document.getElementById('dashSavingsBar').style.width = pct+'%';
+  document.getElementById('dashSavingsText').textContent = target>0
+    ? `${money(current||0)} من ${money(target)} — باقي ${money(Math.max(0,target-(current||0)))}`
+    : 'حدد هدف الادخار من قسم "الادخار"';
 
-    function openEditModal(index) {
-      editingIndex = index;
-      const item = transactions[index];
-      document.getElementById('edit-title').value = item.title;
-      document.getElementById('edit-amount').value = item.amount;
-      document.getElementById('edit-category').value = item.category;
-      document.getElementById('editModal').style.display = 'block';
-    }
+  const alertsBox = document.getElementById('dashAlerts');
+  const carAlerts = state.carItems.map(c=>({c, st:carStatus(c)})).filter(x=>x.st.badge!=='good');
+  if(carAlerts.length){
+    alertsBox.innerHTML = `<div class="card" style="border-color:var(--ochre);"><h2>تذكير السيارة</h2>
+      ${carAlerts.map(({c,st})=>`
+        <div class="list-item">
+          <div class="li-main"><div class="li-icon ${st.badge}">${carIcon(c.key)}</div><div class="li-text"><div class="li-title">${escapeHtml(c.name)}</div></div></div>
+          <span class="badge ${st.badge}">${st.text}</span>
+        </div>`).join('')}
+    </div>`;
+  } else { alertsBox.innerHTML = ''; }
 
-    function closeEditModal() { document.getElementById('editModal').style.display = 'none'; editingIndex = null; }
+  const fbox = document.getElementById('dashFixedList');
+  if(!state.fixedExpenses.length){ fbox.innerHTML = '<div class="empty-hint">زيد المصاريف الثابتة ديالك باش تتبعها هنا.</div>'; }
+  else {
+    const sorted = [...state.fixedExpenses].sort((a,b)=>a.day-b.day).slice(0,5);
+    fbox.innerHTML = sorted.map(f=>`
+      <div class="list-item">
+        <div class="li-main"><div class="li-icon">${catIcon(f.category)}</div><div class="li-text"><div class="li-title">${escapeHtml(f.name)}</div><div class="li-sub">اليوم ${f.day}</div></div></div>
+        <div class="li-amount neg">${money(f.amount)}</div>
+      </div>`).join('');
+  }
 
-    function saveEdit() {
-      if (editingIndex !== null) {
-        transactions[editingIndex].title = document.getElementById('edit-title').value;
-        transactions[editingIndex].amount = parseFloat(document.getElementById('edit-amount').value);
-        transactions[editingIndex].category = document.getElementById('edit-category').value;
-        saveAndRender();
-        closeEditModal();
-      }
-    }
+  const gbox = document.getElementById('dashGoalsList');
+  const activeGoals = state.goals.filter(g=>!g.done).slice(0,4);
+  if(!activeGoals.length){ gbox.innerHTML = '<div class="empty-hint">ماكاين حتى هدف جاري دابا.</div>'; }
+  else {
+    gbox.innerHTML = activeGoals.map(g=>`
+      <div style="margin-bottom:10px;">
+        <div class="row-between" style="margin-bottom:4px;"><span style="font-size:13.5px; font-weight:700;">${escapeHtml(g.title)}</span><span class="muted">${g.progress}%</span></div>
+        <div class="progress-track"><div class="progress-fill teal" style="width:${g.progress}%"></div></div>
+      </div>`).join('');
+  }
 
-    function renderChart() {
-      const canvas = document.getElementById('expenseChart');
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const categoryTotals = {};
-      transactions.filter(t => t.type === 'expense').forEach(t => { categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount; });
-      const totalExpense = Object.values(categoryTotals).reduce((a, b) => a + b, 0);
-      const legendDiv = document.getElementById('chart-legend');
-      legendDiv.innerHTML = '';
+  const abox = document.getElementById('dashApptsList');
+  const upcoming = [...state.appointments].filter(a=>a.date>=todayStr())
+    .sort((a,b)=> (a.date+((a.time)||'00:00')).localeCompare(b.date+((b.time)||'00:00'))).slice(0,3);
+  if(!upcoming.length){ abox.innerHTML = '<div class="empty-hint">ماكاين حتى موعد قادم.</div>'; }
+  else {
+    abox.innerHTML = upcoming.map(a=>`
+      <div class="list-item">
+        <div class="li-main"><div class="li-icon ${a.type==='travel'?'ochre':'good'}">${a.type==='travel'?'✈️':a.type==='work'?'💼':'📌'}</div>
+          <div class="li-text"><div class="li-title">${escapeHtml(a.title)}</div><div class="li-sub">${a.date}${a.time?' · '+a.time:''}</div></div>
+        </div>
+      </div>`).join('');
+  }
+  renderDebtsInDash();
+}
+function renderDebtsInDash(){
+  let owedToMe = 0, iOwe = 0;
+  state.debts.forEach(d=>{
+    const paid = (d.payments||[]).reduce((s,p)=>s+Number(p.amount),0);
+    const remain = Math.max(0, d.total - paid);
+    if(d.type==='owed_to_me') owedToMe += remain; else iOwe += remain;
+  });
+  document.getElementById('dashDebtsOwedToMe').textContent = money(owedToMe);
+  document.getElementById('dashDebtsIOwe').textContent = money(iOwe);
+}
 
-      if (totalExpense === 0) {
-        ctx.fillStyle = '#6B7280'; ctx.font = '14px Tajawal'; ctx.textAlign = 'center';
-        ctx.fillText('لا توجد مصاريف مسجلة', 120, 120); return;
-      }
-
-      const colors = ['#221C13', '#D9A74A', '#8C6D3B', '#A64B2A', '#059669', '#2563EB'];
-      let startAngle = 0, i = 0;
-      for (const [cat, amt] of Object.entries(categoryTotals)) {
-        const sliceAngle = (2 * Math.PI * amt) / totalExpense;
-        ctx.fillStyle = colors[i % colors.length];
-        ctx.beginPath(); ctx.moveTo(120, 120);
-        ctx.arc(120, 120, 100, startAngle, startAngle + sliceAngle);
-        ctx.closePath(); ctx.fill();
-        startAngle += sliceAngle;
-        legendDiv.innerHTML += `
-          <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
-            <span><span style="display:inline-block; width:12px; height:12px; background:${colors[i % colors.length]}; border-radius: 50%; margin-left: 6px;"></span>${cat}</span>
-            <span><b>${amt.toFixed(2)} د.م.</b> (${((amt/totalExpense)*100).toFixed(1)}%)</span>
-          </div>`;
-        i++;
-      }
-    }
-
-    function exportData() {
-      const backup = { transactions, debts };
-      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `masarifi_backup_${new Date().toISOString().slice(0, 10)}.json`;
-      a.click();
-    }
-
-    function importData(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        try {
-          const data = JSON.parse(evt.target.result);
-          if (confirm('سيتم استبدال البيانات الحالية بالبيانات المسترجعة، هل تريد المتابعة؟')) {
-            transactions = data.transactions || [];
-            debts = data.debts || [];
-            saveAndRender();
-            localStorage.setItem('masarifi_debts', JSON.stringify(debts));
-            renderDebts();
-            alert('تم استرجاع البيانات بنجاح!');
-          }
-        } catch (err) { alert('ملف غير صالح.'); }
-      };
-      reader.readAsText(file);
-    }
-
-    function clearAllData() {
-      if (confirm('تنبيه: هل أنت متاكد من حذف جميع البيانات نهائياً؟')) {
-        localStorage.clear(); transactions = []; debts = []; saveAndRender(); renderDebts();
-      }
-    }
-
-    renderTransactions();
-    renderDebts();
-  </script>
+document.getElementById('f-tx-date').value = todayStr();
+loadState();
+</script>
 </body>
-        </html>
-        
+</html>
