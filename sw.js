@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kontajiran-v1';
+const CACHE_NAME = 'kontajiran-v2';
 const ASSETS = [
   './index.html',
   './manifest.json',
